@@ -1,11 +1,11 @@
 import React from 'react';
 import { Container } from '@mui/material';
-import SignupForm from '../components/auth/SignupForm';
+import {AuthForm} from '../components/AuthForm/AuthForm';
 
 const SignupPage = () => {
   return (
     <Container maxWidth="sm">
-      <SignupForm />
+      <AuthForm type="signup"/>
     </Container>
   );
 };

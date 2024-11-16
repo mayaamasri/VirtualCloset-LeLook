@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from '@mui/material';
-import PreferenceForm from '../components/preferences/preferenceForm';
+import PreferenceForm from '../components/preferences/form/PreferenceForm';
 
 const CreatePreferencePage = () => (
   <Container maxWidth="md">

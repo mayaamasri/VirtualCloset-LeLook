@@ -1,12 +1,12 @@
 // src/pages/LoginPage.jsx
 import React from 'react';
 import { Container } from '@mui/material';
-import LoginForm from '../components/auth/LoginForm';
+import {AuthForm} from '../components/AuthForm/AuthForm';
 
 const LoginPage = () => {
   return (
     <Container maxWidth="sm">
-      <LoginForm />
+      <AuthForm type="login"/>
     </Container>
   );
 };

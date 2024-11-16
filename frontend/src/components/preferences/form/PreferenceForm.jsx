@@ -1,8 +1,9 @@
 import React from 'react';
 import { Box, Stack, Typography, Button } from '@mui/material';
-import Logo from '../common/Logo';
-import PreferenceFormFields from './preferenceFormField';
-import { usePreferencesForm } from '../../hooks/usePreferencesForm';
+import Logo from '../../common/Logo';
+import { Fields } from './Fields';
+import { usePreferencesForm } from '../../../hooks/usePreferencesForm';
+import { PREFERENCE_STYLES } from '../styles';
 
 const PreferenceForm = ({ mode = 'create' }) => {
   const {
@@ -25,19 +26,19 @@ const PreferenceForm = ({ mode = 'create' }) => {
   }
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ maxWidth: 600, mx: 'auto', mt: 10, p: 3 }}>
+    <Box component="form" onSubmit={handleSubmit} sx={PREFERENCE_STYLES.form}>
       <Stack spacing={3}>
         <Logo />
         <Typography
           variant="h5"
           textAlign="center"
           color="text.secondary"
-          sx={{ fontFamily: 'Playfair Display', fontStyle: 'italic' }}
+          sx={PREFERENCE_STYLES.heading}
         >
-          {mode === 'edit' ? 'Update Your Preferences' : 'Let\'s personalize your experience'}
+          {mode === 'edit' ? 'Update Your Preferences' : "Let's personalize your experience"}
         </Typography>
 
-        <PreferenceFormFields
+        <Fields
           formData={formData}
           handleChange={handleChange}
           handleColorSelect={handleColorSelect}
@@ -57,11 +58,7 @@ const PreferenceForm = ({ mode = 'create' }) => {
               type="button"
               variant="outlined"
               onClick={() => navigate('/homepage')}
-              sx={{
-                borderRadius: 28,
-                py: 1.5,
-                flex: 1
-              }}
+              sx={PREFERENCE_STYLES.button}
             >
               Cancel
             </Button>
@@ -70,14 +67,7 @@ const PreferenceForm = ({ mode = 'create' }) => {
             type="submit"
             variant="contained"
             disabled={isLoading}
-            sx={{
-              borderRadius: 28,
-              py: 1.5,
-              bgcolor: 'primary.main',
-              color: 'white',
-              '&:hover': { bgcolor: 'primary.dark' },
-              flex: 1
-            }}
+            sx={{ ...PREFERENCE_STYLES.button, ...PREFERENCE_STYLES.submitButton }}
           >
             {isLoading ? `${mode === 'edit' ? 'Updating' : 'Creating'}...` : `${mode === 'edit' ? 'Update' : 'Create'} Preferences`}
           </Button>

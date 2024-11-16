@@ -1,11 +1,11 @@
-export const styleOptions = [
+export const PREFERENCE_OPTIONS = {
+  STYLES: [
     'Casual', 'Formal', 'Sporty', 'Vintage', 'Minimalist', 'Bohemian', 'Street'
-  ];
-  
-  export const colorOptions = [
+  ],
+  COLORS: [
     'Black', 'White', 'Navy', 'Beige', 'Gray', 'Brown', 'Red', 'Blue', 'Green', 'Purple', 'Pink'
-  ];
-  
-  export const fitOptions = [
+  ],
+  FITS: [
     'Slim', 'Regular', 'Loose', 'Oversized'
-  ];
+  ]
+};
