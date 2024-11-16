@@ -1,10 +1,10 @@
 import React from 'react';
 import { Container } from '@mui/material';
-import AddItemForm from '../components/items/AddItemForm';
+import ItemForm from '../../components/Items/itemsAdd/ItemForm';
 
 const AddItemPage = () => (
   <Container maxWidth="md">
-    <AddItemForm />
+    <ItemForm />
   </Container>
 );
 

@@ -3,7 +3,7 @@ import { Box, Container, Typography, Grid, Paper, Button} from '@mui/material';
 import { Shirt, Plus, Sun, Search, Icon} from 'lucide-react';
 import {coatHanger} from '@lucide/lab';
 import { useNavigate } from 'react-router-dom';
-import AuthService from '../services/authService';
+import AuthService from '../../services/authService';
 
 const Homepage = () => {
   const navigate = useNavigate();

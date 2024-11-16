@@ -48,6 +48,7 @@ const ImageUpload = ({ onImageSelect, currentImageUrl }) => {
         justifyContent: 'center',
         position: 'relative',
         overflow: 'hidden',
+        mb: 3
       }}
     >
       <input

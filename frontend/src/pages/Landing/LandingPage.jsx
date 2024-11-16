@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Container, Button, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import Logo from '../components/common/Logo';
-import FeatureGrid from '../components/Landing/FeatureGrid';
+import Logo from '../../components/common/Logo';
+import FeatureGrid from '../../components/Landing/FeatureGrid';
 
 const LandingPage = () => {
   const navigate = useNavigate();

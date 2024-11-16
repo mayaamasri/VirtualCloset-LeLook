@@ -1,4 +1,3 @@
-// src/components/items/ItemsNavBar.jsx
 import React from 'react';
 import { Box, TextField, InputAdornment, Tabs, Tab, Button } from '@mui/material';
 import { Search, Plus } from 'lucide-react';

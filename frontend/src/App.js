@@ -3,17 +3,17 @@ import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './theme';
 import { CssBaseline } from '@mui/material';
 import ProtectedRoute from './utils/ProtectedRoute';
-import LandingPage from './pages/LandingPage';
-import SignupPage from './pages/SignupPage';
-import LoginPage from './pages/LoginPage';
-import Homepage from './pages/HomePage';
-import AddItemPage from './pages/AddItemPage';
-import CreatePreferencePage from './pages/CreatePreferencePage';
-import EditPreferencePage from './pages/EditPrefrencePage';
-import ItemsPage from './pages/ItemsPage';
-import EditItemPage from './pages/EditItemPage';
+import LandingPage from './pages/Landing/LandingPage';
+import SignupPage from './pages/Auth/SignupPage';
+import LoginPage from './pages/Auth/LoginPage';
+import Homepage from './pages/HomePage/HomePage';
+import AddItemPage from './pages/Items/AddItemPage';
+import CreatePreferencePage from './pages/Preferences/CreatePreferencePage';
+import EditPreferencePage from './pages/Preferences/EditPrefrencePage';
+import ItemsPage from './pages/Items/ItemsPage';
+import EditItemPage from './pages/Items/EditItemPage';
 import CreateOutfitPage from './pages/CreateOutfitPage';
-import OutfitsPage from './components/outfits/outfitsDisplayPage'
+import OutfitsPage from './components/Outfits/outfitsDisplayPage'
 import EditOutfitPage from './pages/EditOutfitPage';
 import Layout from './components/Layout/layout';
 

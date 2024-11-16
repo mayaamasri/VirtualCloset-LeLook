@@ -1,4 +1,3 @@
-// utils/imageUtils.js
 export const getImageUrl = (imagePath) => {
     if (!imagePath) return '';
     if (imagePath.startsWith('http')) return imagePath;
@@ -7,7 +6,7 @@ export const getImageUrl = (imagePath) => {
     const cleanPath = imagePath.replace(/^\/+/, '');
     
     // Construct the full URL using environment variable or default
-    return `${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/${cleanPath}`;
+    return `${'http://localhost:4000'}/${cleanPath}`;
   };
   
   // For handling image load errors

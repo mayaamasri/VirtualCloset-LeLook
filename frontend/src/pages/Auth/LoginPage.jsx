@@ -1,7 +1,7 @@
 // src/pages/LoginPage.jsx
 import React from 'react';
 import { Container } from '@mui/material';
-import {AuthForm} from '../components/AuthForm/AuthForm';
+import {AuthForm} from '../../components/AuthForm/AuthForm';
 
 const LoginPage = () => {
   return (

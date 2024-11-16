@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Container, Grid, CircularProgress } from '@mui/material';
 import html2canvas from 'html2canvas';
-import ItemsPanel from '../components/outfits/itemsPanel';
-import OutfitCanvas from '../components/outfits/outfitCanvas';
-import OutfitDetailsForm from '../components/outfits/outfitDetailsForm';
+import ItemsPanel from '../components/Outfits/itemsPanel';
+import OutfitCanvas from '../components/Outfits/outfitCanvas';
+import OutfitDetailsForm from '../components/Outfits/outfitDetailsForm';
 import ItemService from '../services/itemService';
 import OutfitService from '../services/outfitService';
 
