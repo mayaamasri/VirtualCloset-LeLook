@@ -20,7 +20,7 @@ const ItemsPanel = ({
     if (!imagePath) return '';
     if (imagePath.startsWith('http')) return imagePath;
     const cleanPath = imagePath.replace(/^\/+/, '');
-    return `${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/${cleanPath}`;
+    return `${'http://localhost:4000'}/${cleanPath}`;
   };
 
   return (

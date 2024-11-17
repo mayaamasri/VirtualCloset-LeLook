@@ -16,7 +16,6 @@ const ReviewField = ({ label, value }) => (
 const ItemReview = ({ formData }) => {
   return (
     <Stack spacing={3}>
-      {/* Image Preview */}
       <Box sx={{ textAlign: 'center' }}>
         <img
           src={formData.image ? URL.createObjectURL(formData.image) : ''}
@@ -29,7 +28,6 @@ const ItemReview = ({ formData }) => {
         />
       </Box>
 
-      {/* Details */}
       <Grid container spacing={2}>
         <ReviewField label="Name" value={formData.name} />
         <ReviewField label="Category" value={formData.category} />

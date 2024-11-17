@@ -1,4 +1,3 @@
-// middleware/backgroundRemoval.js
 const axios = require('axios');
 const FormData = require('form-data');
 const fs = require('fs');
@@ -15,10 +14,8 @@ const removeBackground = async (req, res, next) => {
   }
 
   try {
-    // Read the uploaded file
     const imageBuffer = await readFile(req.file.path);
 
-    // Create form data for remove.bg API
     const formData = new FormData();
     formData.append('size', 'auto');
     formData.append('image_file', imageBuffer, {
@@ -28,7 +25,6 @@ const removeBackground = async (req, res, next) => {
 
     console.log('Sending request to remove.bg API...');
 
-    // Call remove.bg API
     const response = await axios({
       method: 'post',
       url: 'https://api.remove.bg/v1.0/removebg',
@@ -46,17 +42,13 @@ const removeBackground = async (req, res, next) => {
 
     console.log('Successfully removed background');
 
-    // Delete the original file
     await unlink(req.file.path);
 
-    // Create new filename for processed image
     const processedFileName = `nobg_${Date.now()}_${path.basename(req.file.originalname)}`;
     const processedFilePath = path.join(req.file.destination, processedFileName);
 
-    // Save the processed image
     await writeFile(processedFilePath, response.data);
 
-    // Update req.file with new file information
     req.file.filename = processedFileName;
     req.file.path = processedFilePath;
     req.file.size = response.data.length;
@@ -69,9 +61,6 @@ const removeBackground = async (req, res, next) => {
     if (error.response) {
       console.error('API Response:', error.response.data.toString());
     }
-    
-    // If there's an error, we should still keep the original image
-    // just pass it through without background removal
     next();
   }
 };

@@ -16,7 +16,6 @@ const createItemController = async (req, res) => {
 
         const { user_id, name, category_name, color, season } = req.body;
         
-        // Validate required fields
         if (!user_id || !name || !category_name || !color || !season) {
             return res.status(400).json({ 
                 error: "Missing required fields",
@@ -24,15 +23,12 @@ const createItemController = async (req, res) => {
             });
         }
 
-        // Check if file was uploaded
         if (!req.file) {
             return res.status(400).json({ error: "Image file is required" });
         }
 
-        // Generate image URL
         const image_url = `/uploads/${req.file.filename}`;
 
-        // Create item
         const item = await createItem(
             name, 
             category_name, 

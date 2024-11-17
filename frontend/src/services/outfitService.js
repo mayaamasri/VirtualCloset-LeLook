@@ -1,4 +1,3 @@
-// services/outfitService.js
 import http from "../http-common";
 
 const createOutfit = async (formData) => {

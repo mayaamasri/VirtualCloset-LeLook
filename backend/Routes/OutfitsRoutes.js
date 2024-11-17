@@ -18,9 +18,8 @@ const {
 } = require('../Validators/OutfitsValidator');
 
 router.post('/', 
-    upload.single('image'), // Handle file upload first
+    upload.single('image'),
     (req, res, next) => {
-        // If items is sent as string, parse it to JSON
         if (req.body.items && typeof req.body.items === 'string') {
             try {
                 req.body.items = JSON.parse(req.body.items);

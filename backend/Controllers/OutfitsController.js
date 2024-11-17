@@ -15,7 +15,6 @@ const { validationResult } = require('express-validator');
 
 const createOutfitController = async (req, res) => {
     try {
-        // Check for validation errors
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
@@ -26,7 +25,6 @@ const createOutfitController = async (req, res) => {
         
         try {
             items = req.body.items || [];
-            // If items is a string, parse it (should be handled by middleware now)
             if (typeof items === 'string') {
                 items = JSON.parse(items);
             }
@@ -35,13 +33,11 @@ const createOutfitController = async (req, res) => {
             return res.status(400).json({ error: "Invalid items data" });
         }
 
-        // Handle image upload
         let image_url = null;
         if (req.file) {
             image_url = `/uploads/${req.file.filename}`;
         }
 
-        // Create outfit
         const outfit = await createOutfit(
             name,
             occasion,
@@ -50,7 +46,6 @@ const createOutfitController = async (req, res) => {
             user_id
         );
 
-        // Create outfit items
         if (items && items.length > 0) {
             for (const item of items) {
                 await createOutfitItem(
@@ -63,7 +58,6 @@ const createOutfitController = async (req, res) => {
             }
         }
 
-        // Get complete outfit with items
         const completeOutfit = await getOutfitById(outfit.outfit_id);
 
         res.status(201).json({
@@ -109,7 +103,6 @@ const getOutfitsByUserIdController = async (req, res) => {
         console.log('Fetching outfits for user:', user_id);
         const outfits = await getOutfitsByUserId(user_id);
         
-        // Log the processed outfits
         console.log('Processed outfits:', JSON.stringify(outfits, null, 2));
 
         res.status(200).json({
@@ -173,10 +166,8 @@ const updateOutfitController = async (req, res) => {
             return res.status(404).json({ error: "Outfit not found" });
         }
 
-        // Handle image update
         let image_url = outfit.image_url;
         if (req.file) {
-            // Delete old image if exists
             if (outfit.image_url) {
                 try {
                     const oldImagePath = path.join(__dirname, '../public', outfit.image_url);
@@ -188,7 +179,6 @@ const updateOutfitController = async (req, res) => {
             image_url = `/uploads/${req.file.filename}`;
         }
 
-        // Update outfit
         const updated = await updateOutfit(
             outfit_id,
             name,
@@ -201,9 +191,7 @@ const updateOutfitController = async (req, res) => {
             return res.status(500).json({ error: "Failed to update outfit" });
         }
 
-        // Update outfit items if provided
         if (items) {
-            // Add new outfit items
             const parsedItems = JSON.parse(items);
             for (const item of parsedItems) {
                 await createOutfitItem(
