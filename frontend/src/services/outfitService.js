@@ -2,7 +2,6 @@
 import http from "../http-common";
 
 const createOutfit = async (formData) => {
-  // Log the formData contents for debugging
   for (let pair of formData.entries()) {
       console.log(pair[0] + ': ' + pair[1]);
   }

@@ -10,19 +10,19 @@ import {
   Button 
 } from '@mui/material';
 
-const seasonOptions = ['Spring', 'Summer', 'Fall', 'Winter'];
-const occasionOptions = ['Casual', 'Formal', 'Business', 'Sports', 'Party'];
+export const SEASON_OPTIONS = ['Spring', 'Summer', 'Fall', 'Winter'];
+export const OCCASION_OPTIONS = ['Casual', 'Formal', 'Business', 'Sports', 'Party'];
 
 const OutfitDetailsForm = ({
-  outfitName,
-  season,
-  occasion,
-  onNameChange,
-  onSeasonChange,
-  onOccasionChange,
+  formData,
+  onChange,
   onSave,
   isEditing = false
 }) => {
+  const handleChange = (field) => (event) => {
+    onChange(field, event.target.value);
+  };
+
   return (
     <Paper
       elevation={3}
@@ -38,8 +38,8 @@ const OutfitDetailsForm = ({
           <TextField
             fullWidth
             label="Outfit Name"
-            value={outfitName}
-            onChange={(e) => onNameChange(e.target.value)}
+            value={formData.outfitName}
+            onChange={handleChange('outfitName')}
             sx={{
               '& .MuiOutlinedInput-root': {
                 borderRadius: 2,
@@ -52,12 +52,12 @@ const OutfitDetailsForm = ({
           <FormControl fullWidth>
             <InputLabel>Season</InputLabel>
             <Select
-              value={season}
-              onChange={(e) => onSeasonChange(e.target.value)}
+              value={formData.season}
+              onChange={handleChange('season')}
               label="Season"
               sx={{ borderRadius: 2, backgroundColor: '#d0c7b8' }}
             >
-              {seasonOptions.map((option) => (
+              {SEASON_OPTIONS.map((option) => (
                 <MenuItem key={option} value={option}>{option}</MenuItem>
               ))}
             </Select>
@@ -67,25 +67,34 @@ const OutfitDetailsForm = ({
           <FormControl fullWidth>
             <InputLabel>Occasion</InputLabel>
             <Select
-              value={occasion}
-              onChange={(e) => onOccasionChange(e.target.value)}
+              value={formData.occasion}
+              onChange={handleChange('occasion')}
               label="Occasion"
               sx={{ borderRadius: 2, backgroundColor: '#d0c7b8' }}
             >
-              {occasionOptions.map((option) => (
+              {OCCASION_OPTIONS.map((option) => (
                 <MenuItem key={option} value={option}>{option}</MenuItem>
               ))}
             </Select>
           </FormControl>
         </Grid>
         <Grid item xs={12} md={3}>
-        <Button
-          variant="contained"
-          onClick={onSave}
-          sx={{ flex: 1, borderRadius: 2, height: '56px', bgcolor: '#6D5E52', color: 'white' }}
-        >
-          {isEditing ? 'Save Changes' : 'Create Outfit'}
-        </Button>
+          <Button
+            variant="contained"
+            onClick={onSave}
+            fullWidth
+            sx={{ 
+              borderRadius: 2, 
+              height: '56px', 
+              bgcolor: '#6D5E52', 
+              color: 'white',
+              '&:hover': {
+                bgcolor: '#5d4e42'
+              }
+            }}
+          >
+            {isEditing ? 'Save Changes' : 'Create Outfit'}
+          </Button>
         </Grid>
       </Grid>
     </Paper>

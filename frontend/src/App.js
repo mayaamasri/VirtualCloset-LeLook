@@ -12,9 +12,9 @@ import CreatePreferencePage from './pages/Preferences/CreatePreferencePage';
 import EditPreferencePage from './pages/Preferences/EditPrefrencePage';
 import ItemsPage from './pages/Items/ItemsPage';
 import EditItemPage from './pages/Items/EditItemPage';
-import CreateOutfitPage from './pages/CreateOutfitPage';
-import OutfitsPage from './components/Outfits/outfitsDisplayPage'
-import EditOutfitPage from './pages/EditOutfitPage';
+import CreateOutfitPage from './pages/Outfits/CreateOutfitPage';
+import OutfitsPage from './pages/Outfits/DisplayOutfitsPage'
+import EditOutfitPage from './pages/Outfits/EditOutfitPage';
 import Layout from './components/Layout/layout';
 
 function App() {
@@ -27,7 +27,6 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/preferences" element={<CreatePreferencePage />} />
-          
           <Route element={
             <ProtectedRoute>
               <Layout />
