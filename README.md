@@ -1,4 +1,4 @@
-# ★ LeLook Project Documentation
+# ✨ LeLook 
 
 ## Table of Contents
 - [Overview](#overview)
