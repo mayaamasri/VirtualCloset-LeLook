@@ -14,6 +14,7 @@ const clothingItemsRoutes = require("./Routes/ClothingItemsRoutes");
 const outfitsRoutes = require("./Routes/OutfitsRoutes");
 const outfitsItemsRoutes = require("./Routes/OutfitsItemsRoutes");
 const categoriesRoutes = require("./Routes/CategoriesRoutes");
+const aiRoutes = require("./Routes/aiRoutes");
 
 dotenv.config();
 
@@ -38,7 +39,7 @@ app.use("/clothingitems", clothingItemsRoutes);
 app.use("/outfits", outfitsRoutes);
 app.use("/outfitItems", outfitsItemsRoutes);
 app.use("/categories", categoriesRoutes);
-
+app.use('/ai', aiRoutes);
 
 app.get("/", (req, res) => {
   res.send("api working");

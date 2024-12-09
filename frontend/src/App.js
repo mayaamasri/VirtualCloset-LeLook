@@ -16,6 +16,7 @@ import CreateOutfitPage from './pages/Outfits/CreateOutfitPage';
 import OutfitsPage from './pages/Outfits/DisplayOutfitsPage'
 import EditOutfitPage from './pages/Outfits/EditOutfitPage';
 import Layout from './components/Layout/layout';
+import AiSuggestionsPage from './pages/aipage';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
             <Route path="/outfits/create" element={<CreateOutfitPage />} />
             <Route path="/outfits/:id" element={<EditOutfitPage />} />
             <Route path="/preferences/edit" element={<EditPreferencePage />} />
+            <Route path="/ai-generate" element={<AiSuggestionsPage />} />
           </Route>
         </Routes>
         </BrowserRouter>

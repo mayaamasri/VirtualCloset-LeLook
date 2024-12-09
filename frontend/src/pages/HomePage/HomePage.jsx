@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Container, Typography, Grid, Paper, Button} from '@mui/material';
-import { Shirt, Plus, Sun, Search, Icon} from 'lucide-react';
-import {coatHanger} from '@lucide/lab';
+import { Shirt, Plus, Sun, Wand} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../../services/authService';
 
@@ -106,26 +105,22 @@ const Homepage = () => {
                     Create Outfit
                   </Button>
                 </Grid>
-                <Grid item xs={6}>
-                  <Button
-                    fullWidth
-                    variant="outlined"
-                    startIcon={<Search />}
-                    sx={{ height: '100%', py: 2, borderRadius: 3,  bgcolor: '#d0c7b8', color: 'white' }}
-                  >
-                    Browse Fits
-                  </Button>
-                </Grid>
-                <Grid item xs={6}>
-                  <Button
-                    fullWidth
-                    variant="outlined"
-                    startIcon={<Icon iconNode = {coatHanger} />}
-                    onClick={() => navigate('/items')}
-                    sx={{ height: '100%', py: 2, borderRadius: 3,  bgcolor: '#d0c7b8', color: 'white'  }}
-                  >
-                    Browse Closet
-                  </Button>
+                <Grid item xs={12}>
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  startIcon={<Wand />}
+                  onClick={() => navigate('/ai-generate')}
+                  sx={{
+                    height: '100%',
+                    py: 2,
+                    borderRadius: 3,
+                    bgcolor: '#807061',
+                    color: 'white',
+                  }}
+                >
+                  Ai Generator
+                </Button>
                 </Grid>
               </Grid>
             </Paper>
