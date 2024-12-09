@@ -27,6 +27,9 @@ const generateOutfitSuggestion = async (items, preferences, weather, occasion) =
     - Weather: ${weather}
     - Occasion: ${occasion}
     - Season-appropriate styling is essential
+    - make sure not to mix casual and formal pieces (no heels on casual events, etc.)
+    - make them color coordinated
+    - no dresses with pants for example
 
     Return a JSON object with:
     {

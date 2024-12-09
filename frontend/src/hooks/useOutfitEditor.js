@@ -104,6 +104,7 @@ export const useOutfitEditor = (initialOutfit = null) => {
     formData,
     error,
     setSearchQuery,
+    setSelectedItems,
     handleAddItem,
     handleDrag,
     handleResize,

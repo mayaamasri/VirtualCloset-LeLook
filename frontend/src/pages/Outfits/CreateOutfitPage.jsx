@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { Box, Container, Grid, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { useOutfitEditor } from '../../hooks/useOutfitEditor';
 import { captureCanvas } from '../../utils/canvasUtils';
 import OutfitService from '../../services/outfitService';
@@ -23,8 +24,28 @@ const CreateOutfitPage = () => {
     handleDrag,
     handleResize,
     handleRemoveItem,
-    handleFormChange
+    handleFormChange,
+    setSelectedItems
   } = useOutfitEditor();
+
+  useEffect(() => {
+    // Check for AI-suggested items in sessionStorage
+    const suggestedItems = sessionStorage.getItem('aiSuggestedItems');
+    if (suggestedItems) {
+      const parsedItems = JSON.parse(suggestedItems);
+      // Transform items to match the canvas format
+      const formattedItems = parsedItems.map((item, index) => ({
+        id: item.item_id,
+        ...item,
+        position: { x: 50 * index, y: 50 * index }, // Stagger items
+        zIndex: index,
+        scale: 1
+      }));
+      setSelectedItems(formattedItems);
+      // Clear the sessionStorage
+      sessionStorage.removeItem('aiSuggestedItems');
+    }
+  }, [setSelectedItems]);
 
   const handleSave = async () => {
     try {
