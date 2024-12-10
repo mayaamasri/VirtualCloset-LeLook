@@ -47,6 +47,35 @@ const generateOutfitSuggestion = async (req, res) => {
   }
 };
 
+const analyzeClothingImage = async (req, res) => {
+  try {
+    const { imageData } = req.body;
+
+    if (!imageData) {
+      return res.status(400).json({
+        error: 'No image data provided'
+      });
+    }
+
+    // Log the first few characters of the image data for debugging
+    console.log('Received image data preview:', imageData.substring(0, 50) + '...');
+
+    const analysis = await AiService.analyzeClothingImage(imageData);
+    
+    console.log('Analysis completed successfully:', analysis);
+
+    res.status(200).json(analysis);
+  } catch (error) {
+    console.error('Error in AI controller:', error);
+    res.status(500).json({
+      error: 'Failed to analyze clothing image',
+      details: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    });
+  }
+};
+
 module.exports = {
-  generateOutfitSuggestion
+  generateOutfitSuggestion,
+  analyzeClothingImage
 };

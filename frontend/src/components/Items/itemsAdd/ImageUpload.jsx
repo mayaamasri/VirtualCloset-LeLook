@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Box, Typography, CircularProgress } from '@mui/material';
-import { Upload } from 'lucide-react';
+import { Box, Typography, CircularProgress, Button } from '@mui/material';
+import { Upload, Sparkles } from 'lucide-react';
+import AiService from '../../../services/aiService';
 
-const ImageUpload = ({ onImageSelect, currentImageUrl }) => {
+const ImageUpload = ({ onImageSelect, currentImageUrl, onAiAnalysis }) => {
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [currentFile, setCurrentFile] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [error, setError] = useState(null);
 
   const handleImageChange = (event) => {
@@ -13,6 +16,7 @@ const ImageUpload = ({ onImageSelect, currentImageUrl }) => {
       try {
         setIsProcessing(true);
         setError(null);
+        setCurrentFile(file);
 
         const reader = new FileReader();
         reader.onload = () => {
@@ -31,6 +35,25 @@ const ImageUpload = ({ onImageSelect, currentImageUrl }) => {
         setError('Failed to process image');
         setIsProcessing(false);
       }
+    }
+  };
+
+  const handleAiAnalysis = async () => {
+    if (!currentFile) {
+      setError('No image file available for analysis');
+      return;
+    }
+
+    try {
+      setIsAnalyzing(true);
+      setError(null);
+      const response = await AiService.analyzeClothingImage(currentFile);
+      onAiAnalysis(response);
+    } catch (err) {
+      setError('Failed to analyze image with AI');
+      console.error('AI analysis error:', err);
+    } finally {
+      setIsAnalyzing(false);
     }
   };
 
@@ -55,7 +78,7 @@ const ImageUpload = ({ onImageSelect, currentImageUrl }) => {
         accept="image/*"
         type="file"
         onChange={handleImageChange}
-        disabled={isProcessing}
+        disabled={isProcessing || isAnalyzing}
         style={{
           position: 'absolute',
           top: 0,
@@ -63,16 +86,16 @@ const ImageUpload = ({ onImageSelect, currentImageUrl }) => {
           width: '100%',
           height: '100%',
           opacity: 0,
-          cursor: isProcessing ? 'not-allowed' : 'pointer',
+          cursor: isProcessing || isAnalyzing ? 'not-allowed' : 'pointer',
           zIndex: 1
         }}
       />
       
-      {isProcessing ? (
+      {isProcessing || isAnalyzing ? (
         <Box sx={{ textAlign: 'center' }}>
           <CircularProgress size={40} color="primary" />
           <Typography variant="body1" color="primary" mt={2}>
-            Processing image...
+            {isAnalyzing ? 'Analyzing image with AI...' : 'Processing image...'}
           </Typography>
         </Box>
       ) : previewUrl || currentImageUrl ? (
@@ -81,6 +104,7 @@ const ImageUpload = ({ onImageSelect, currentImageUrl }) => {
             width: '100%',
             height: '100%',
             display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
             position: 'relative',
@@ -92,11 +116,31 @@ const ImageUpload = ({ onImageSelect, currentImageUrl }) => {
             alt="Preview"
             sx={{
               maxWidth: '90%',
-              maxHeight: '90%',
+              maxHeight: '70%',
               objectFit: 'contain',
               display: 'block'
             }}
           />
+          
+          {currentFile && !currentImageUrl && (
+            <Button
+              variant="contained"
+              startIcon={<Sparkles size={16} />}
+              onClick={handleAiAnalysis}
+              disabled={isAnalyzing}
+              sx={{
+                mt: 2,
+                borderRadius: 28,
+                zIndex: 1,
+                bgcolor: 'primary.main',
+                color: 'white',
+                '&:hover': { bgcolor: 'primary.dark' }
+              }}
+            >
+              Analyze with AI
+            </Button>
+          )}
+          
           <Box
             sx={{
               position: 'absolute',

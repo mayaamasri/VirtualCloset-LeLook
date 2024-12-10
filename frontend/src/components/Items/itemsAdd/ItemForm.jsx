@@ -7,7 +7,8 @@ import {
   StepLabel,
   Button,
   Alert,
-  CircularProgress
+  CircularProgress,
+  Collapse
 } from '@mui/material';
 import { useItemForm } from '../../../hooks/useItemsForm';
 import { ITEM_CONSTANTS } from './constants';
@@ -32,10 +33,34 @@ const ItemForm = ({ id = null }) => {
   } = useItemForm(id);
 
   const [activeStep, setActiveStep] = useState(0);
+  const [aiAnalysis, setAiAnalysis] = useState(null);
+  const [showAiSuccess, setShowAiSuccess] = useState(false);
 
   const handleImageSelect = (file) => {
     setFormData(prev => ({ ...prev, image: file }));
     setError('');
+    setAiAnalysis(null);
+    setShowAiSuccess(false);
+  };
+
+  const handleAiAnalysis = (analysisResult) => {
+    setAiAnalysis(analysisResult);
+    setShowAiSuccess(true);
+    
+    // Update form data with AI analysis
+    setFormData(prev => ({
+      ...prev,
+      name: analysisResult.name || '',
+      category: analysisResult.category_name || '',
+      color: analysisResult.color || '',
+      season: analysisResult.season || ''
+    }));
+
+    // Auto-advance to next step after brief delay
+    setTimeout(() => {
+      handleNext();
+      setShowAiSuccess(false);
+    }, 2000);
   };
 
   const handleChange = (e) => {
@@ -85,6 +110,12 @@ const ItemForm = ({ id = null }) => {
         {id ? 'Edit Item' : 'Add New Item'}
       </Typography>
 
+      <Collapse in={showAiSuccess}>
+        <Alert severity="success" sx={{ mb: 3 }}>
+          AI analysis complete! Details have been filled automatically.
+        </Alert>
+      </Collapse>
+
       {success && (
         <Alert severity="success" sx={{ mb: 3 }}>
           Item {id ? 'updated' : 'added'} successfully! Redirecting...
@@ -109,9 +140,10 @@ const ItemForm = ({ id = null }) => {
 
       {id ? (
         <>
-        <ImageUpload
+          <ImageUpload
             onImageSelect={handleImageSelect}
             currentImageUrl={currentImageUrl}
+            onAiAnalysis={handleAiAnalysis}
           />
           <FormFields
             formData={formData}
@@ -121,7 +153,10 @@ const ItemForm = ({ id = null }) => {
         </>
       ) : (
         activeStep === 0 ? (
-          <ImageUpload onImageSelect={handleImageSelect} />
+          <ImageUpload 
+            onImageSelect={handleImageSelect}
+            onAiAnalysis={handleAiAnalysis}
+          />
         ) : activeStep === 1 ? (
           <FormFields
             formData={formData}

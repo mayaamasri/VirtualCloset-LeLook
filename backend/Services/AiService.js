@@ -29,7 +29,8 @@ const generateOutfitSuggestion = async (items, preferences, weather, occasion) =
     - Season-appropriate styling is essential
     - make sure not to mix casual and formal pieces (no heels on casual events, etc.)
     - make them color coordinated
-    - no dresses with pants for example
+    - no dresses with pants for example or tshirts
+    - one bag per outfit
 
     Return a JSON object with:
     {
@@ -86,6 +87,59 @@ const generateOutfitSuggestion = async (items, preferences, weather, occasion) =
   }
 };
 
+const analyzeClothingImage = async (base64Image) => {
+  try {
+    // Remove the data:image/* prefix if present
+    const base64Data = base64Image.replace(/^data:image\/\w+;base64,/, '');
+    
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: [
+        {
+          role: "system",
+          content: "You are a fashion expert AI that analyzes clothing images. Provide detailed information about clothing items, including their category, color, appropriate seasons, and any notable style characteristics."
+        },
+        {
+          role: "user",
+          content: [
+            {
+              type: "text",
+              text: "Analyze this clothing item and provide details in JSON format with the following fields: category_name (matching one of: Dresses, Blazers, Knitwear, Sweatshirts | Hoodies, Skirts, Shorts, Joggers, T-Shirts, Jackets, Jeans, Trousers, Tops, Coats, Shoes, Bags, Accessories), color (primary color), season (Spring, Summer, Fall, Winter, or All Seasons), name (suggested name for the item)."
+            },
+            {
+              type: "image_url",
+              image_url: {
+                url: `data:image/jpeg;base64,${base64Data}`
+              }
+            }
+          ]
+        }
+      ],
+      max_tokens: 1000,
+      response_format: { type: "json_object" }
+    });
+
+    // Log successful response for debugging
+    console.log('OpenAI Analysis Result:', response.choices[0].message.content);
+
+    const analysisResult = JSON.parse(response.choices[0].message.content);
+
+    // Validate the response format
+    if (!analysisResult.category_name || !analysisResult.color || !analysisResult.season || !analysisResult.name) {
+      throw new Error('Incomplete analysis result from OpenAI');
+    }
+
+    return analysisResult;
+  } catch (error) {
+    console.error('Error analyzing image:', {
+      message: error.message,
+      details: error.response?.data || error
+    });
+    throw error;
+  }
+};
+
 module.exports = {
-  generateOutfitSuggestion
+  generateOutfitSuggestion,
+  analyzeClothingImage
 };
