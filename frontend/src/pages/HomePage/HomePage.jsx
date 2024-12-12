@@ -144,8 +144,8 @@ const HomePage = () => {
       <Box
         sx={{
           position: 'absolute',
-          bottom: 730,
-          left: 30,
+          bottom: 740,
+          left: 0,
           p: 3,
           zIndex: 2
         }}
