@@ -37,7 +37,7 @@ const CreateOutfitPage = () => {
       const formattedItems = parsedItems.map((item, index) => ({
         id: item.item_id,
         ...item,
-        position: { x: 50 * index, y: 50 * index }, // Stagger items
+        position: { x: 100 * index, y: index }, // Stagger items
         zIndex: index,
         scale: 1
       }));
