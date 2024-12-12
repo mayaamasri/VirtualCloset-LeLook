@@ -15,16 +15,23 @@ export const useOutfitEditor = (initialOutfit = null) => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (initialOutfit) {
+    if (initialOutfit && initialOutfit.items) {
+      setSelectedItems(initialOutfit.items.map(item => ({
+        id: item.id,
+        ...item,
+        position: item.OutfitItem?.position || item.position || { x: 0, y: 0 },
+        scale: item.OutfitItem?.scale || item.scale || 1,
+        zIndex: item.OutfitItem?.position_index || item.zIndex || 0
+      })));
+      
       setFormData({
-        outfitName: initialOutfit.name,
-        season: initialOutfit.season,
-        occasion: initialOutfit.occasion
+        outfitName: initialOutfit.name || '',
+        season: initialOutfit.season || '',
+        occasion: initialOutfit.occasion || ''
       });
-      setSelectedItems(initialOutfit.items || []);
     }
   }, [initialOutfit]);
-
+  
   useEffect(() => {
     fetchItems();
   }, []);

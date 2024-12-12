@@ -15,6 +15,8 @@ const EditOutfitPage = () => {
   const canvasRef = useRef(null);
   const { outfitData, loading: outfitLoading, error: outfitError } = useOutfitData(outfitId);
 
+  console.log('OutfitData received: ', outfitData);
+
   const {
     loading: editorLoading,
     items,
@@ -30,6 +32,7 @@ const EditOutfitPage = () => {
     handleFormChange
   } = useOutfitEditor(outfitData);
 
+  console.log('Selected Items: ', selectedItems);
   const handleSave = async () => {
     try {
       const canvasImage = await captureCanvas(canvasRef);

@@ -40,26 +40,17 @@ const getOutfitById = async (id) => {
         
         return {
             ...plainOutfit,
-            ClothingItems: plainOutfit.ClothingItems?.map(item => {
-                try {
-                    const outfitItemData = item.OutfitItems || {};
-                    const positionString = outfitItemData.position;
-                    
-                    return {
-                        ...item,
-                        position: positionString ? JSON.parse(positionString) : { x: 0, y: 0 },
-                        scale: outfitItemData.scale || 1,
-                        position_index: outfitItemData.position_index || 0
-                    };
-                } catch (err) {
-                    return {
-                        ...item,
-                        position: { x: 0, y: 0 },
-                        scale: 1,
-                        position_index: 0
-                    };
+            ClothingItems: plainOutfit.ClothingItems?.map(item => ({
+                ...item,
+                OutfitItem: {
+                    ...item.OutfitItems,
+                    position: item.OutfitItems?.position 
+                        ? (typeof item.OutfitItems.position === 'string' 
+                            ? JSON.parse(item.OutfitItems.position) 
+                            : item.OutfitItems.position)
+                        : { x: 0, y: 0 }
                 }
-            }) || []
+            }))
         };
     } catch (err) {
         console.error('Error getting outfit by ID:', err);

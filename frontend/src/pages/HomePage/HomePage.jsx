@@ -134,7 +134,7 @@ const HomePage = () => {
                     borderRadius: 28,
                   }}
                 >
-                  AI GENERATOR
+                  AI stylist
                 </Button>
               </Box>
             </Box>

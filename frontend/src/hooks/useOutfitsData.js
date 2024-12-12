@@ -1,3 +1,4 @@
+// useOutfitsData.js
 import { useState, useEffect } from 'react';
 import OutfitService from '../services/outfitService';
 
@@ -15,9 +16,9 @@ export const useOutfitData = (outfitId) => {
         const outfitItems = outfit.ClothingItems.map(item => ({
           id: item.item_id,
           ...item,
-          position: item.position || { x: 0, y: 0 },
-          scale: item.scale || 1,
-          zIndex: item.position_index || 0
+          position: item.OutfitItem.position, // Use OutfitItem position directly
+          scale: item.OutfitItem.scale,
+          zIndex: item.OutfitItem.position_index
         }));
 
         setOutfitData({
@@ -34,7 +35,9 @@ export const useOutfitData = (outfitId) => {
       }
     };
 
-    fetchOutfit();
+    if (outfitId) {
+      fetchOutfit();
+    }
   }, [outfitId]);
 
   return { outfitData, loading, error };
