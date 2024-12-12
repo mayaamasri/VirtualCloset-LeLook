@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Container, Typography, Grid, Paper, Button} from '@mui/material';
-import { Shirt, Plus, Sun, Wand} from 'lucide-react';
+import { Box, Typography, Button, Container, Grid } from '@mui/material';
+import { Plus, Wand, Shirt } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../../services/authService';
+import { useWeather } from '../../hooks/useWeather';
 
-const Homepage = () => {
+const HomePage = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
-  const [greeting] = useState(() => {
-    const hour = new Date().getHours();
-    if (hour < 12) return 'Good Morning';
-    if (hour < 18) return 'Good Afternoon';
-    return 'Good Evening';
-  });
+  const { weather, loading: weatherLoading, error: weatherError } = useWeather();
 
   useEffect(() => {
     const fetchUserName = async () => {
@@ -30,127 +26,152 @@ const Homepage = () => {
   }, []);
 
   return (
-    <Container maxWidth="xl" sx={{ pt: 4 }}>
-      <Box sx={{ mb: 4 }}>
-          <Typography
-            variant="h4"
-            sx={{
-              fontFamily: 'Playfair Display',
-              fontStyle: 'italic',
-              color: 'primary.main',
-            }}
-          >
-            {greeting}, {userName}
-          </Typography>
-          <Typography variant="subtitle1" color="text.secondary">
-            Let's find the perfect outfit for today
-          </Typography>
-        </Box>
+    <Box
+      sx={{
+        minHeight: '91vh',
+        width: '100%',
+        position: 'relative',
+        display: 'flex',
+        alignItems: 'center',
+        overflow: 'hidden'
+      }}
+    >
+      {/* Background container with shifted image */}
+      <Box
+        sx={{
+          position: 'absolute',
+          left: '-5%', 
+          width: '105%', 
+          height: '100%',
+          backgroundImage: 'url(/images/wardrobe-bg.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center left',
+        }}
+      />
 
-        <Grid container spacing={3} sx={{ mb: 4 }}>
-          <Grid item xs={12} md={6}>
-            <Paper
-              sx={{
-                p: 3,
-                height: '100%',
-                bgcolor: '#D0C7B8',
-                color: 'white',
-                borderRadius: 4
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-                <Typography variant="h6">Today's Weather</Typography>
-              </Box>
-              <Box sx={{ display: 'flex', gap: 2, alignItems:'center' }}>
-              <Sun size={32}/>
-              <Typography variant="h4">75°F</Typography>
-              </Box>
-              <Button
-                variant="contained"
+      {/* Content */}
+      <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 1 }}>
+        <Grid container>
+          <Grid item xs={12} md={6}></Grid>
+          <Grid item xs={12}md={6}>
+            <Box sx={{ textAlign: 'left'}}>
+              <Typography
+                variant="h2"
                 sx={{
-                  mt: 2,
-                  bgcolor: 'white',
+                  fontFamily: 'Playfair Display',
+                  fontStyle: 'italic',
                   color: 'primary.main',
-                  '&:hover': { bgcolor: 'rgba(255,255,255,0.9)' }
+                  mb: 2,
+                  fontWeight: 600
                 }}
               >
-                See Weather-Based Suggestions
-              </Button>
-            </Paper>
-          </Grid>
+                LeLook
+              </Typography>
+              <Typography
+                variant="h5"
+                sx={{
+                  color: '#6D5E52',
+                  maxWidth: '500px',
+                  mb: 5,
+                  fontWeight: 500
+                }}
+              >
+                Your wardrobe, reimagined – create, organize, and style effortlessly with your virtual closet.
+              </Typography>
 
-          <Grid item xs={12} md={6}>
-            <Paper sx={{ p: 3, height: '100%', borderRadius: 4}}>
-              <Typography variant="h6" color="text.secondary" sx={{ mb: 3 }}>Quick Actions</Typography>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                <Button
-                fullWidth
-                variant="outlined"
-                startIcon={<Plus />}
-                onClick={() => navigate('/items/add')}
-                sx={{ height: '100%', borderRadius: 3, py:2, bgcolor: '#d0c7b8', color: 'white' }}
-                >
-                Add New Item
-                </Button>
-                </Grid>
-                <Grid item xs={6}>
+              <Box sx={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                gap: 2,
+                width: '400px' // Fixed width for button container
+              }}>
+                {/* Top row buttons container */}
+                <Box sx={{ 
+                  display: 'flex', 
+                  gap: 2,
+                  width: '100%'
+                }}>
                   <Button
-                    fullWidth
-                    variant="outlined"
+                    variant="contained"
                     startIcon={<Shirt />}
                     onClick={() => navigate('/outfits/create')}
-                    sx={{ height: '100%', borderRadius: 3, py:2, bgcolor: '#d0c7b8', color: 'white' }}
+                    sx={{
+                      flex: 1,
+                      bgcolor: '#AE9276',
+                      color: 'white',
+                      py: 1.5,
+                      borderRadius: 28,
+                    }}
                   >
-                    Create Outfit
+                    CREATE OUTFIT
                   </Button>
-                </Grid>
-                <Grid item xs={12}>
+                  <Button
+                    variant="contained"
+                    startIcon={<Plus />}
+                    onClick={() => navigate('/items/add')}
+                    sx={{
+                      flex: 1,
+                      bgcolor: '#AE9276',
+                      color: 'white',
+                      py: 1.5,
+                      borderRadius: 28,
+                    }}
+                  >
+                    ADD NEW ITEM
+                  </Button>
+                </Box>
+
+                {/* Bottom full-width button */}
                 <Button
-                  fullWidth
-                  variant="outlined"
+                  variant="contained"
                   startIcon={<Wand />}
                   onClick={() => navigate('/ai-generate')}
                   sx={{
-                    height: '100%',
-                    py: 2,
-                    borderRadius: 3,
-                    bgcolor: '#807061',
+                    width: '100%',
+                    bgcolor: 'primary.main',
                     color: 'white',
+                    py: 1.5,
+                    borderRadius: 28,
                   }}
                 >
-                  Ai Generator
+                  AI GENERATOR
                 </Button>
-                </Grid>
-              </Grid>
-            </Paper>
+              </Box>
+            </Box>
           </Grid>
         </Grid>
-
-        <Box>
-          <Grid container spacing={3}>
-            {[1, 2, 3].map((item) => (
-              <Grid item xs={12} sm={6} md={4} key={item}>
-                <Paper
-                  sx={{
-                    borderRadius: 4,
-                    height: 200,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    bgcolor: 'white'
-                  }}
-                >
-                  <Typography color="text.secondary">
-                    Outfit Preview {item}
-                  </Typography>
-                </Paper>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
       </Container>
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: 730,
+          left: 30,
+          p: 3,
+          zIndex: 2
+        }}
+      >
+        <Typography variant='h5' 
+        sx={{
+          fontFamily: 'Playfair Display',
+          fontStyle: 'italic',
+          color: 'primary.main',
+          fontWeight: 600,
+          mb: 1
+          }}>
+          Today's weather:
+        </Typography>
+        {weatherLoading ? (
+          <Typography>Loading weather...</Typography>
+        ) : weatherError ? (
+          <Typography color="error">{weatherError}</Typography>
+        ) : weather ? (
+          <Typography variant="h6" sx={{ color: '#6D5E52' }}>
+            {weather.temperature}°C - {weather.description}
+          </Typography>
+        ) : null}
+      </Box>
+    </Box>
   );
 };
 
-export default Homepage;
+export default HomePage;

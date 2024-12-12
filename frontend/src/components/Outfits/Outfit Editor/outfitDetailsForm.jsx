@@ -86,11 +86,8 @@ const OutfitDetailsForm = ({
             sx={{ 
               borderRadius: 2, 
               height: '56px', 
-              bgcolor: '#6D5E52', 
+              bgcolor: '#AE9276', 
               color: 'white',
-              '&:hover': {
-                bgcolor: '#5d4e42'
-              }
             }}
           >
             {isEditing ? 'Save Changes' : 'Create Outfit'}
