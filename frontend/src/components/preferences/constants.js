@@ -1,11 +1,26 @@
+// Constants for the Preferences component.
 export const PREFERENCE_OPTIONS = {
   STYLES: [
-    'Casual', 'Formal', 'Sporty', 'Vintage', 'Minimalist', 'Bohemian', 'Street'
+    "Casual",
+    "Formal",
+    "Sporty",
+    "Vintage",
+    "Minimalist",
+    "Bohemian",
+    "Street",
   ],
   COLORS: [
-    'Black', 'White', 'Navy', 'Beige', 'Gray', 'Brown', 'Red', 'Blue', 'Green', 'Purple', 'Pink'
+    "Black",
+    "White",
+    "Navy",
+    "Beige",
+    "Gray",
+    "Brown",
+    "Red",
+    "Blue",
+    "Green",
+    "Purple",
+    "Pink",
   ],
-  FITS: [
-    'Slim', 'Regular', 'Loose', 'Oversized'
-  ]
+  FITS: ["Slim", "Regular", "Loose", "Oversized"],
 };

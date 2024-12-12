@@ -1,18 +1,18 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const {
-    createUserPreferenceController,
-    getUserPreferenceController,
-    updateUserPreferenceController,
-} = require('../Controllers/UserPrefController');
+  createUserPreferenceController,
+  getUserPreferenceController,
+  updateUserPreferenceController,
+} = require("../Controllers/UserPrefController");
 
 const {
-    insertUserPrefValidator,
-    updateUserPrefValidator,
-} = require('../Validators/UserPrefValidator');
+  insertUserPrefValidator,
+  updateUserPrefValidator,
+} = require("../Validators/UserPrefValidator");
 
-router.post('/', insertUserPrefValidator, createUserPreferenceController);
-router.get('/:id', getUserPreferenceController);
-router.put('/:id', updateUserPrefValidator, updateUserPreferenceController);
+router.post("/", insertUserPrefValidator, createUserPreferenceController);
+router.get("/:id", getUserPreferenceController);
+router.put("/:id", updateUserPrefValidator, updateUserPreferenceController);
 
 module.exports = router;

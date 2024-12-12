@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import CountryService from '../services/countryService';
+import { useState, useEffect } from "react";
+import CountryService from "../services/countryService";
 
 export const useCountries = () => {
   const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -12,7 +12,7 @@ export const useCountries = () => {
         const response = await CountryService.getAll();
         setCountries(response.data);
       } catch (err) {
-        setError('Unable to load countries. Please try again later.');
+        setError("Unable to load countries. Please try again later.");
       } finally {
         setLoading(false);
       }

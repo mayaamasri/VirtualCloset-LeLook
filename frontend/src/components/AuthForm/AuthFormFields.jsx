@@ -3,11 +3,13 @@ import TextField from '../forms/TextField';
 import PasswordField from '../forms/PasswordField';
 import { CountrySelect } from './CountrySelect';
 
+// AuthFormFields component
 export const AuthFormFields = ({ type, formData, handleChange, isLoading }) => {
   return (
     <>
       {type === 'signup' && (
         <>
+          {/* TextField component */}
           <TextField
             name="first_name"
             placeholder="First name"
@@ -22,6 +24,7 @@ export const AuthFormFields = ({ type, formData, handleChange, isLoading }) => {
             onChange={handleChange}
             disabled={isLoading}
           />
+          {/* CountrySelect component */}
             <CountrySelect
             value={formData.country_name}
             onChange={handleChange}

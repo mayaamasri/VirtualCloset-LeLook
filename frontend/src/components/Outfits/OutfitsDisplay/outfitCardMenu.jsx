@@ -2,6 +2,7 @@ import React from "react";
 import { Menu, MenuItem } from "@mui/material";
 import { Edit2, Trash2 } from "lucide-react";
 
+// OutfitCardMenu component
 const OutfitCardMenu = ({ anchorEl, open, onClose, onEdit, onDelete }) => (
   <Menu anchorEl={anchorEl} open={open} onClose={onClose}>
     <MenuItem
@@ -10,6 +11,7 @@ const OutfitCardMenu = ({ anchorEl, open, onClose, onEdit, onDelete }) => (
         onEdit();
       }}
     >
+      {/* Edit icon */}
       <Edit2 size={16} />
       Edit
     </MenuItem>
@@ -19,6 +21,7 @@ const OutfitCardMenu = ({ anchorEl, open, onClose, onEdit, onDelete }) => (
         onDelete();
       }}
     >
+      {/* Delete icon */}
       <Trash2 size={16} />
       Delete
     </MenuItem>

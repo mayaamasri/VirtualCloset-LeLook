@@ -1,13 +1,13 @@
-import React, { useRef } from 'react';
-import { Box, Container, Grid, CircularProgress } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useOutfitEditor } from '../../hooks/useOutfitEditor';
-import { captureCanvas } from '../../utils/canvasUtils';
-import OutfitService from '../../services/outfitService';
-import ItemsPanel from '../../components/Outfits/Outfit Editor/itemsPanel';
-import OutfitCanvas from '../../components/Outfits/Outfit Editor/outfitCanvas';
-import OutfitDetailsForm from '../../components/Outfits/Outfit Editor/outfitDetailsForm';
+import React, { useRef } from "react";
+import { Box, Container, Grid, CircularProgress } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useOutfitEditor } from "../../hooks/useOutfitEditor";
+import { captureCanvas } from "../../utils/canvasUtils";
+import OutfitService from "../../services/outfitService";
+import ItemsPanel from "../../components/Outfits/Outfit Editor/itemsPanel";
+import OutfitCanvas from "../../components/Outfits/Outfit Editor/outfitCanvas";
+import OutfitDetailsForm from "../../components/Outfits/Outfit Editor/outfitDetailsForm";
 
 const CreateOutfitPage = () => {
   const canvasRef = useRef(null);
@@ -25,12 +25,12 @@ const CreateOutfitPage = () => {
     handleResize,
     handleRemoveItem,
     handleFormChange,
-    setSelectedItems
+    setSelectedItems,
   } = useOutfitEditor();
 
   useEffect(() => {
     // Check for AI-suggested items in sessionStorage
-    const suggestedItems = sessionStorage.getItem('aiSuggestedItems');
+    const suggestedItems = sessionStorage.getItem("aiSuggestedItems");
     if (suggestedItems) {
       const parsedItems = JSON.parse(suggestedItems);
       // Transform items to match the canvas format
@@ -39,11 +39,11 @@ const CreateOutfitPage = () => {
         ...item,
         position: { x: 100 * index, y: index }, // Stagger items
         zIndex: index,
-        scale: 1
+        scale: 1,
       }));
       setSelectedItems(formattedItems);
       // Clear the sessionStorage
-      sessionStorage.removeItem('aiSuggestedItems');
+      sessionStorage.removeItem("aiSuggestedItems");
     }
   }, [setSelectedItems]);
 
@@ -51,38 +51,45 @@ const CreateOutfitPage = () => {
     try {
       const canvasImage = await captureCanvas(canvasRef);
       if (!canvasImage) {
-        throw new Error('Failed to capture outfit image');
+        throw new Error("Failed to capture outfit image");
       }
 
       if (!formData.outfitName || !formData.occasion || !formData.season) {
-        throw new Error('Please fill in all required fields');
+        throw new Error("Please fill in all required fields");
       }
 
       const formDataObj = new FormData();
-      formDataObj.append('name', formData.outfitName);
-      formDataObj.append('occasion', formData.occasion);
-      formDataObj.append('season', formData.season);
-      formDataObj.append('user_id', localStorage.getItem('userId'));
-      formDataObj.append('image', canvasImage, 'outfit.png');
+      formDataObj.append("name", formData.outfitName);
+      formDataObj.append("occasion", formData.occasion);
+      formDataObj.append("season", formData.season);
+      formDataObj.append("user_id", localStorage.getItem("userId"));
+      formDataObj.append("image", canvasImage, "outfit.png");
 
-      const itemsData = selectedItems.map(item => ({
+      const itemsData = selectedItems.map((item) => ({
         item_id: item.id,
         position: item.position,
         scale: item.scale,
-        position_index: item.zIndex
+        position_index: item.zIndex,
       }));
-      formDataObj.append('items', JSON.stringify(itemsData));
+      formDataObj.append("items", JSON.stringify(itemsData));
 
       await OutfitService.createOutfit(formDataObj);
-      navigate('/outfits');
+      navigate("/outfits");
     } catch (error) {
-      console.error('Error saving outfit:', error);
+      console.error("Error saving outfit:", error);
     }
   };
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "60vh",
+        }}
+      >
         <CircularProgress />
       </Box>
     );

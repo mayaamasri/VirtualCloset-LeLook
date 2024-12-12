@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '@mui/material';
 
+// SubmitButton component
 export const SubmitButton = ({ isLoading, type }) => (
   <Button
     type="submit"

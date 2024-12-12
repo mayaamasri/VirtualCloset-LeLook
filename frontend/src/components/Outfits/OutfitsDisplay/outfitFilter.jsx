@@ -4,6 +4,7 @@ import { Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import FilterInputs from "./filterInputs";
 
+// OutfitsFilter component
 const OutfitsFilter = ({ filters, onFilterChange }) => {
   const navigate = useNavigate();
 
@@ -17,6 +18,7 @@ const OutfitsFilter = ({ filters, onFilterChange }) => {
           mb: 3,
         }}
       >
+        {/* Filter inputs */}
         <FilterInputs filters={filters} onFilterChange={onFilterChange} />
         <Button
           variant="contained"

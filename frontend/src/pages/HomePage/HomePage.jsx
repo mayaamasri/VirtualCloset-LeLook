@@ -5,16 +5,19 @@ import { useNavigate } from 'react-router-dom';
 import AuthService from '../../services/authService';
 import { useWeather } from '../../hooks/useWeather';
 
+// HomePage component
 const HomePage = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const { weather, loading: weatherLoading, error: weatherError } = useWeather();
 
+  // Fetch user details on component mount
   useEffect(() => {
     const fetchUserName = async () => {
       try {
         const userId = localStorage.getItem('userId');
         if (userId) {
+          // Fetch user details
           const response = await AuthService.getUserDetails(userId);
           setUserName(response.data.user.first_name);
         }

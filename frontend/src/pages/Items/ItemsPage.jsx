@@ -1,16 +1,28 @@
-import React, { useState } from 'react';
-import { Box, Container, Grid, Typography, CircularProgress } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import ItemsNavBar from '../../components/Items/itemsDisplay/ItemsNavBar';
-import ItemCard from '../../components/Items/itemsDisplay/ItemsCard';
-import { DeleteDialog } from '../../components/Items/itemsDisplay/deleteDialog';
-import { useItems } from '../../hooks/useItems';
-import { useItemFilters } from '../../hooks/useItemFilters';
+import React, { useState } from "react";
+import {
+  Box,
+  Container,
+  Grid,
+  Typography,
+  CircularProgress,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import ItemsNavBar from "../../components/Items/itemsDisplay/ItemsNavBar";
+import ItemCard from "../../components/Items/itemsDisplay/ItemsCard";
+import { DeleteDialog } from "../../components/Items/itemsDisplay/deleteDialog";
+import { useItems } from "../../hooks/useItems";
+import { useItemFilters } from "../../hooks/useItemFilters";
 
 const ItemsPage = () => {
   const navigate = useNavigate();
   const { items, categories, loading, error, handleDeleteItem } = useItems();
-  const { searchQuery, setSearchQuery, currentFilter, setCurrentFilter, filteredItems } = useItemFilters(items);
+  const {
+    searchQuery,
+    setSearchQuery,
+    currentFilter,
+    setCurrentFilter,
+    filteredItems,
+  } = useItemFilters(items);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
 
@@ -24,7 +36,7 @@ const ItemsPage = () => {
   };
 
   const handleDeleteConfirm = async () => {
-    if (itemToDelete && await handleDeleteItem(itemToDelete.item_id)) {
+    if (itemToDelete && (await handleDeleteItem(itemToDelete.item_id))) {
       setDeleteDialogOpen(false);
       setItemToDelete(null);
     }
@@ -32,21 +44,28 @@ const ItemsPage = () => {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "60vh",
+        }}
+      >
         <CircularProgress />
       </Box>
     );
   }
 
   return (
-    <Box sx={{ minHeight: '100vh', py: 4 }}>
+    <Box sx={{ minHeight: "100vh", py: 4 }}>
       <Container maxWidth="xl">
         <Typography
           variant="h4"
           sx={{
-            fontFamily: 'Playfair Display',
-            fontStyle: 'italic',
-            color: 'primary.main',
+            fontFamily: "Playfair Display",
+            fontStyle: "italic",
+            color: "primary.main",
             mb: 4,
           }}
         >

@@ -3,8 +3,10 @@ import { Stack, TextField, FormControl, InputLabel, Select, MenuItem, Typography
 import { ITEM_CONSTANTS } from './constants';
 import { ITEM_STYLES } from './styles';
 
+// FormFields component
 export const FormFields = ({ formData, handleChange, categories }) => (
   <Stack spacing={3}>
+    {/* Item Name */}
     <TextField
       fullWidth
       label="Item Name"
@@ -14,8 +16,10 @@ export const FormFields = ({ formData, handleChange, categories }) => (
       required
     />
 
+    {/* Item Description */}
     <FormControl fullWidth required>
       <InputLabel>Category</InputLabel>
+      {/* Category Select */}
       <Select
         name="category"
         value={formData.category}
@@ -29,11 +33,14 @@ export const FormFields = ({ formData, handleChange, categories }) => (
       </Select>
     </FormControl>
 
+    {/* Item Description */}
     <Grid container spacing={2}>
       <Grid item xs={12}>
+        {/* Item Description */}
         <Typography variant="subtitle1" color="text.secondary" mb={1}>
           Color
         </Typography>
+        {/* Color Chips */}
         <Box sx={ITEM_STYLES.chipContainer}>
           {ITEM_CONSTANTS.COLOR_OPTIONS.map((color) => (
             <Chip
@@ -49,6 +56,7 @@ export const FormFields = ({ formData, handleChange, categories }) => (
         </Box>
       </Grid>
 
+      {/* Season */}
       <Grid item xs={12}>
         <Typography variant="subtitle1" color="text.secondary" mb={1}>
           Season

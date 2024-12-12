@@ -1,6 +1,7 @@
 import http from "../http-common";
 import { setToken, removeToken } from "../utils/token";
 
+// AuthService provides methods for user authentication
 const login = async (data) => {
   const response = await http.post("/users/login", data);
   if (response.data.token) {
@@ -10,6 +11,7 @@ const login = async (data) => {
   return response.data;
 };
 
+// Get user details by user ID
 const getUserDetails = (userId) => {
   return http.get(`/users/${userId}`);
 };

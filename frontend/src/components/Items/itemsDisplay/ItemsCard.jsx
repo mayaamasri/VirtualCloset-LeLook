@@ -4,10 +4,12 @@ import { MoreVertical } from 'lucide-react';
 import { ITEM_STYLES } from './styles';
 import { MenuOptions } from './itemsMenuOptions';
 
+// ItemCard component
 const ItemCard = ({ item, onEdit, onDelete }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
+  // Function to get image URL
   const getImageUrl = (imagePath) => {
     if (!imagePath) return '';
     if (imagePath.startsWith('http')) return imagePath;
@@ -15,13 +17,16 @@ const ItemCard = ({ item, onEdit, onDelete }) => {
     return `${'http://localhost:4000'}/${cleanPath}`;
   };
 
+  // Function to get category name
   const getCategoryName = (item) => {
     return item.Category?.category_name || item.category_name || 'Uncategorized';
   };
 
   return (
     <Card sx={ITEM_STYLES.card}>
+      {/* Image container */}
       <Box sx={ITEM_STYLES.imageContainer}>
+        {/* Image */}
         <Box
           component="img"
           src={getImageUrl(item.image_url)}
@@ -36,10 +41,12 @@ const ItemCard = ({ item, onEdit, onDelete }) => {
         </IconButton>
       </Box>
 
+      {/* Card content */}
       <CardContent sx={{ flexGrow: 1, pt: 2 }}>
         <Typography variant="h6" color="text.secondary" gutterBottom>
           {item.name}
         </Typography>
+        {/* Chip container */}
         <Box sx={{ display: 'flex', gap: 1, mb: 1, flexWrap: 'wrap' }}>
           {[getCategoryName(item), item.season, item.color].map((label) => (
             <Chip 
@@ -52,6 +59,7 @@ const ItemCard = ({ item, onEdit, onDelete }) => {
         </Box>
       </CardContent>
 
+      {/* Menu options */}
       <MenuOptions
         anchorEl={anchorEl}
         open={open}

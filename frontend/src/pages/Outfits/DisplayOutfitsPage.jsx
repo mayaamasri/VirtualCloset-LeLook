@@ -1,10 +1,16 @@
-import React from 'react';
-import { Box, Container, Typography, Grid, CircularProgress } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import OutfitService from '../../services/outfitService';
-import OutfitCard from '../../components/Outfits/OutfitsDisplay/outfitCard';
-import OutfitsFilter from '../../components/Outfits/OutfitsDisplay/outfitFilter';
-import { useOutfits } from '../../hooks/useOutfits';
+import React from "react";
+import {
+  Box,
+  Container,
+  Typography,
+  Grid,
+  CircularProgress,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import OutfitService from "../../services/outfitService";
+import OutfitCard from "../../components/Outfits/OutfitsDisplay/outfitCard";
+import OutfitsFilter from "../../components/Outfits/OutfitsDisplay/outfitFilter";
+import { useOutfits } from "../../hooks/useOutfits";
 
 const OutfitsPage = () => {
   const navigate = useNavigate();
@@ -16,13 +22,15 @@ const OutfitsPage = () => {
     filters,
     setFilters,
     fetchOutfits,
-    setError
+    setError,
   } = useOutfits();
 
+  // Fetch outfits on initial render
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
   };
 
+  // Fetch outfits on initial render
   const handleDelete = async (outfitId) => {
     try {
       await OutfitService.deleteOutfit(outfitId);
@@ -41,20 +49,23 @@ const OutfitsPage = () => {
   }
 
   return (
-    <Box sx={{ minHeight: '100vh', py: 4 }}>
+    <Box sx={{ minHeight: "100vh", py: 4 }}>
+      {/* Outfits display */}
       <Container maxWidth="xl">
+        {/* Page title */}
         <Typography
           variant="h4"
           sx={{
-            fontFamily: 'Playfair Display',
-            fontStyle: 'italic',
-            color: 'primary.main',
-            mb: 4
+            fontFamily: "Playfair Display",
+            fontStyle: "italic",
+            color: "primary.main",
+            mb: 4,
           }}
         >
           My Outfits
         </Typography>
 
+        {/* Outfits filter */}
         <OutfitsFilter filters={filters} onFilterChange={handleFilterChange} />
 
         {filteredOutfits.length === 0 ? (

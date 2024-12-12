@@ -1,13 +1,14 @@
-import React from 'react';
+import React from "react";
 import {
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
   Button,
-  Typography
-} from '@mui/material';
+  Typography,
+} from "@mui/material";
 
+// DeleteDialog component
 export const DeleteDialog = ({ open, itemName, onClose, onConfirm }) => (
   <Dialog
     open={open}
@@ -18,8 +19,8 @@ export const DeleteDialog = ({ open, itemName, onClose, onConfirm }) => (
     <DialogTitle id="delete-dialog-title">Delete Item</DialogTitle>
     <DialogContent id="delete-dialog-description">
       <Typography>
-        Are you sure you want to delete "{itemName}"? 
-        This action cannot be undone.
+        Are you sure you want to delete "{itemName}"? This action cannot be
+        undone.
       </Typography>
     </DialogContent>
     <DialogActions>

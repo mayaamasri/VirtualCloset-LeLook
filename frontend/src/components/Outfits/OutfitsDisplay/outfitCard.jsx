@@ -4,14 +4,17 @@ import OutfitImage from './outfitImage';
 import OutfitDetails from './outfitDetails';
 import OutfitCardMenu from './outfitCardMenu';
 
+// OutfitCard component
 const OutfitCard = ({ outfit, onEdit, onDelete }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
+  // Handle menu click
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
+  // Handle menu close
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
@@ -28,17 +31,20 @@ const OutfitCard = ({ outfit, onEdit, onDelete }) => {
           boxShadow: 10
         }
       }}>
+        {/* Outfit image */}
         <OutfitImage
           imageUrl={outfit.image_url}
           name={outfit.name}
           onMenuClick={handleMenuClick}
         />
+        {/* Outfit details */}
         <OutfitDetails
           name={outfit.name}
           season={outfit.season}
           occasion={outfit.occasion}
           itemCount={outfit.ClothingItems?.length}
         />
+        {/* Outfit card menu */}
         <OutfitCardMenu
           anchorEl={anchorEl}
           open={open}

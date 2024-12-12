@@ -1,8 +1,10 @@
 import React from 'react';
 import { Box, Typography, FormControlLabel, Switch, FormHelperText } from '@mui/material';
 
+// WeatherToggle component
 export const WeatherToggle = ({ checked, onChange }) => (
   <Box>
+    {/* FormControlLabel */}
     <FormControlLabel
       control={
         <Switch

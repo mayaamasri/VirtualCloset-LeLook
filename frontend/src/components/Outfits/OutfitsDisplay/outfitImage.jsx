@@ -3,12 +3,14 @@ import { Box, IconButton } from '@mui/material';
 import { MoreVertical } from 'lucide-react';
 import { getImageUrl } from '../../../utils/imageUtils';
 
+// OutfitImage component
 const OutfitImage = ({ imageUrl, name, onMenuClick }) => (
   <Box sx={{ 
     position: 'relative', 
     paddingTop: '100%', 
     backgroundColor: 'secondary.main' 
   }}>
+    {/* Image */}
     <Box
       component="img"
       src={getImageUrl(imageUrl)}
@@ -22,6 +24,7 @@ const OutfitImage = ({ imageUrl, name, onMenuClick }) => (
         objectFit: 'contain'
       }}
     />
+    {/* Menu button */}
     <IconButton
       sx={{
         position: 'absolute',

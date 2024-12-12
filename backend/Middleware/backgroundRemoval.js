@@ -8,11 +8,13 @@ const writeFile = util.promisify(fs.writeFile);
 const unlink = util.promisify(fs.unlink);
 require('dotenv').config();
 
+// Middleware to remove background from image using remove.bg API
 const removeBackground = async (req, res, next) => {
   if (!req.file) {
     return next();
   }
 
+  // Check if the file is an image
   try {
     const imageBuffer = await readFile(req.file.path);
 
@@ -25,6 +27,7 @@ const removeBackground = async (req, res, next) => {
 
     console.log('Sending request to remove.bg API...');
 
+    // Send the image to remove.bg API
     const response = await axios({
       method: 'post',
       url: 'https://api.remove.bg/v1.0/removebg',
@@ -36,6 +39,7 @@ const removeBackground = async (req, res, next) => {
       responseType: 'arraybuffer',
     });
 
+    // Check if the API response is successful
     if (response.status !== 200) {
       throw new Error(`remove.bg API error: ${response.status}`);
     }
@@ -44,6 +48,7 @@ const removeBackground = async (req, res, next) => {
 
     await unlink(req.file.path);
 
+    // Save the processed image
     const processedFileName = `nobg_${Date.now()}_${path.basename(req.file.originalname)}`;
     const processedFilePath = path.join(req.file.destination, processedFileName);
 

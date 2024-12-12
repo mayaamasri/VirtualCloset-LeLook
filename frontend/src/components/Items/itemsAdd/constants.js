@@ -1,3 +1,4 @@
+// Constants for the itemsAdd component
 export const ITEM_CONSTANTS = {
     COLOR_OPTIONS: [
       'Black', 'White', 'Red', 'Blue', 'Green', 'Yellow',

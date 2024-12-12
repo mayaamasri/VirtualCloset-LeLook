@@ -1,62 +1,67 @@
-import React from 'react';
-import { Grid, Box, Typography } from '@mui/material';
+import React from "react";
+import { Grid, Box, Typography } from "@mui/material";
 
+// Features data
 const features = [
   {
-    title: 'Organize',
-    image: 'images/organize.jpg'
+    title: "Organize",
+    image: "images/organize.jpg",
   },
   {
-    title: 'Create',
-    image: 'images/create.jpg'
+    title: "Create",
+    image: "images/create.jpg",
   },
   {
-    title: 'Design',
-    image: 'images/design.jpg'
+    title: "Design",
+    image: "images/design.jpg",
   },
   {
-    title: 'Style',
-    image: 'images/style.jpg'
-  }
+    title: "Style",
+    image: "images/style.jpg",
+  },
 ];
 
+// FeatureCard component
 const FeatureCard = ({ title, image }) => (
   <Box
     sx={{
-      position: 'relative',
+      position: "relative",
       height: { xs: 300, md: 400 },
-      overflow: 'hidden',
+      overflow: "hidden",
       borderRadius: 2,
-      '&::before': {
+      "&::before": {
         content: '""',
-        position: 'absolute',
+        position: "absolute",
         top: 0,
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.2)',
-      }
+        backgroundColor: "rgba(0, 0, 0, 0.2)",
+      },
     }}
   >
+    {/* Image */}
     <Box
       component="img"
       src={image}
       sx={{
-        width: '100%',
-        height: '100%',
-        objectFit: 'cover'
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
       }}
     />
+
+    {/* Title */}
     <Typography
       variant="h2"
       sx={{
-        position: 'absolute',
+        position: "absolute",
         bottom: 15,
         left: 15,
-        color: 'white',
-        fontFamily: 'Playfair Display',
-        fontStyle: 'italic',
-        fontSize: { xs: '2rem', md: '2.5rem' },
+        color: "white",
+        fontFamily: "Playfair Display",
+        fontStyle: "italic",
+        fontSize: { xs: "2rem", md: "2.5rem" },
       }}
     >
       {title}
@@ -64,6 +69,7 @@ const FeatureCard = ({ title, image }) => (
   </Box>
 );
 
+// FeatureGrid component
 const FeatureGrid = () => {
   return (
     <Grid container spacing={2}>

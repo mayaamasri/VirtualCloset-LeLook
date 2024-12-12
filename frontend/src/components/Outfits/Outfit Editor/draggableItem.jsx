@@ -3,10 +3,12 @@ import { Box, Typography, IconButton } from '@mui/material';
 import { Minus, Plus, X } from 'lucide-react';
 import { DraggableCore } from 'react-draggable';
 
+// DraggableItem component
 const DraggableItem = ({ item, onDrag, onRemove, onResize }) => {
   const itemRef = useRef(null);
   const [showControls, setShowControls] = useState(false);
 
+  // Get image URL
   const getImageUrl = (imagePath) => {
     if (!imagePath) return '';
     if (imagePath.startsWith('http')) return imagePath;
@@ -29,6 +31,7 @@ const DraggableItem = ({ item, onDrag, onRemove, onResize }) => {
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => setShowControls(false)}
     >
+      {/* Draggable item */}
       <Box
         sx={{
           position: 'relative',
@@ -38,6 +41,7 @@ const DraggableItem = ({ item, onDrag, onRemove, onResize }) => {
           }
         }}
       >
+        {/* Controls */}
         {showControls && (
           <Box
             sx={{
@@ -75,6 +79,7 @@ const DraggableItem = ({ item, onDrag, onRemove, onResize }) => {
           </Box>
         )}
 
+        {/* DraggableItem component */}
         <IconButton
           size="small"
           onClick={() => onRemove(item.id)}
@@ -91,6 +96,7 @@ const DraggableItem = ({ item, onDrag, onRemove, onResize }) => {
           <X size={16} />
         </IconButton>
 
+        {/* DraggableCore component */}
         <DraggableCore
           nodeRef={itemRef}
           onDrag={(e, data) => onDrag(item.id, data.deltaX, data.deltaY)}

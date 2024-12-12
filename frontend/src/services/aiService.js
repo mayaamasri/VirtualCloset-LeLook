@@ -14,6 +14,7 @@ const generateOutfitSuggestion = async (params) => {
       throw new Error('No data received from server');
     }
 
+    // Return the outfit suggestion data
     return {
       description: response.data.description || 'No outfit description available',
       selected_items: response.data.selected_items || [],

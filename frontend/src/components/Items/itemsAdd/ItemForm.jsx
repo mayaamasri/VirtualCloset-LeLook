@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -8,15 +8,16 @@ import {
   Button,
   Alert,
   CircularProgress,
-  Collapse
-} from '@mui/material';
-import { useItemForm } from '../../../hooks/useItemsForm';
-import { ITEM_CONSTANTS } from './constants';
-import { ITEM_STYLES } from './styles';
-import { FormFields } from './FormFields';
-import ImageUpload from './ImageUpload';
-import ItemReview from './ItemReview';
+  Collapse,
+} from "@mui/material";
+import { useItemForm } from "../../../hooks/useItemsForm";
+import { ITEM_CONSTANTS } from "./constants";
+import { ITEM_STYLES } from "./styles";
+import { FormFields } from "./FormFields";
+import ImageUpload from "./ImageUpload";
+import ItemReview from "./ItemReview";
 
+// ItemForm component
 const ItemForm = ({ id = null }) => {
   const {
     loading,
@@ -29,31 +30,34 @@ const ItemForm = ({ id = null }) => {
     setFormData,
     setError,
     handleSubmit,
-    navigate
+    navigate,
   } = useItemForm(id);
 
+  // State for active step in form
   const [activeStep, setActiveStep] = useState(0);
   const [aiAnalysis, setAiAnalysis] = useState(null);
   const [showAiSuccess, setShowAiSuccess] = useState(false);
 
+  // Handle image select
   const handleImageSelect = (file) => {
-    setFormData(prev => ({ ...prev, image: file }));
-    setError('');
+    setFormData((prev) => ({ ...prev, image: file }));
+    setError("");
     setAiAnalysis(null);
     setShowAiSuccess(false);
   };
 
+  // Handle AI analysis
   const handleAiAnalysis = (analysisResult) => {
     setAiAnalysis(analysisResult);
     setShowAiSuccess(true);
-    
+
     // Update form data with AI analysis
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      name: analysisResult.name || '',
-      category: analysisResult.category_name || '',
-      color: analysisResult.color || '',
-      season: analysisResult.season || ''
+      name: analysisResult.name || "",
+      category: analysisResult.category_name || "",
+      color: analysisResult.color || "",
+      season: analysisResult.season || "",
     }));
 
     // Auto-advance to next step after brief delay
@@ -63,42 +67,45 @@ const ItemForm = ({ id = null }) => {
     }, 2000);
   };
 
+  // Handle form field change
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    setError('');
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setError("");
   };
 
+  // Validate current step
   const validateStep = () => {
     switch (activeStep) {
       case 0:
         if (!formData.image && !currentImageUrl) {
-          setError('Please upload an image');
+          setError("Please upload an image");
           return false;
         }
         break;
       case 1:
         if (!formData.name || !formData.category) {
-          setError('Please fill in all required fields');
+          setError("Please fill in all required fields");
           return false;
         }
         break;
       default:
         break;
     }
-    setError('');
+    setError("");
     return true;
   };
 
+  // Handle next step
   const handleNext = () => {
     if (validateStep()) {
-      setActiveStep(prev => prev + 1);
+      setActiveStep((prev) => prev + 1);
     }
   };
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
         <CircularProgress />
       </Box>
     );
@@ -106,10 +113,12 @@ const ItemForm = ({ id = null }) => {
 
   return (
     <Box sx={ITEM_STYLES.mainContainer}>
+      {/* Title */}
       <Typography variant="h4" sx={ITEM_STYLES.title}>
-        {id ? 'Edit Item' : 'Add New Item'}
+        {id ? "Edit Item" : "Add New Item"}
       </Typography>
 
+      {/* AI analysis success alert */}
       <Collapse in={showAiSuccess}>
         <Alert severity="success" sx={{ mb: 3 }}>
           AI analysis complete! Details have been filled automatically.
@@ -118,10 +127,11 @@ const ItemForm = ({ id = null }) => {
 
       {success && (
         <Alert severity="success" sx={{ mb: 3 }}>
-          Item {id ? 'updated' : 'added'} successfully! Redirecting...
+          Item {id ? "updated" : "added"} successfully! Redirecting...
         </Alert>
       )}
 
+      {/* Stepper */}
       {!id && (
         <Stepper activeStep={activeStep} sx={ITEM_STYLES.stepper}>
           {ITEM_CONSTANTS.STEPS.map((label) => (
@@ -151,29 +161,28 @@ const ItemForm = ({ id = null }) => {
             categories={categories}
           />
         </>
+      ) : activeStep === 0 ? (
+        <ImageUpload
+          onImageSelect={handleImageSelect}
+          onAiAnalysis={handleAiAnalysis}
+        />
+      ) : activeStep === 1 ? (
+        <FormFields
+          formData={formData}
+          handleChange={handleChange}
+          categories={categories}
+        />
       ) : (
-        activeStep === 0 ? (
-          <ImageUpload 
-            onImageSelect={handleImageSelect}
-            onAiAnalysis={handleAiAnalysis}
-          />
-        ) : activeStep === 1 ? (
-          <FormFields
-            formData={formData}
-            handleChange={handleChange}
-            categories={categories}
-          />
-        ) : (
-          <ItemReview formData={formData} />
-        )
+        <ItemReview formData={formData} />
       )}
 
+      {/* Buttons */}
       <Box sx={ITEM_STYLES.buttons}>
         {id ? (
           <>
             <Button
               variant="outlined"
-              onClick={() => navigate('/items')}
+              onClick={() => navigate("/items")}
               sx={ITEM_STYLES.button}
             >
               Cancel
@@ -184,13 +193,13 @@ const ItemForm = ({ id = null }) => {
               disabled={submitting}
               sx={{ ...ITEM_STYLES.button, ...ITEM_STYLES.submitButton }}
             >
-              {submitting ? 'Saving...' : 'Save Changes'}
+              {submitting ? "Saving..." : "Save Changes"}
             </Button>
           </>
         ) : (
           <>
             {activeStep !== 0 && (
-              <Button onClick={() => setActiveStep(prev => prev - 1)}>
+              <Button onClick={() => setActiveStep((prev) => prev - 1)}>
                 Back
               </Button>
             )}
@@ -201,7 +210,7 @@ const ItemForm = ({ id = null }) => {
                 disabled={submitting}
                 sx={{ ...ITEM_STYLES.button, ...ITEM_STYLES.submitButton }}
               >
-                {submitting ? 'Saving...' : 'Save Item'}
+                {submitting ? "Saving..." : "Save Item"}
               </Button>
             ) : (
               <Button

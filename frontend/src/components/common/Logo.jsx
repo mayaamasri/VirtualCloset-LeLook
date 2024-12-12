@@ -1,6 +1,7 @@
 import React from 'react';
 import { Typography } from '@mui/material';
 
+// Logo component
 const Logo = () => {
   return (
     <Typography

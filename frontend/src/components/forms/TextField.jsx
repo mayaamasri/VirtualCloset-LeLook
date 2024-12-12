@@ -1,6 +1,7 @@
 import React from 'react';
 import { TextField } from '@mui/material';
 
+// TextInput component
 const TextInput = ({ error, ...props }) => {
   return (
     <TextField
