@@ -43,8 +43,7 @@ const HomePage = () => {
       <Box
         sx={{
           position: 'absolute',
-          left: '-5%', 
-          width: '105%', 
+          width: '100%', 
           height: '100%',
           backgroundImage: 'url(/images/wardrobe-bg.jpg)',
           backgroundSize: 'cover',

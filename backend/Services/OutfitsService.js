@@ -24,48 +24,57 @@ const createOutfit = async (name, occasion, season, image_url, user_id) => {
 // Get an outfit by ID
 const getOutfitById = async (id) => {
   try {
-    // Get the outfit by ID
     const outfit = await Outfits.findOne({
       where: { outfit_id: id },
-      include: [
-        {
-          model: ClothingItems,
-          through: {
-            model: OutfitItems,
-            attributes: ["position", "scale", "position_index"],
-          },
+      include: [{
+        model: ClothingItems,
+        through: {
+          model: OutfitItems,
+          attributes: ["position", "scale", "position_index"],
         },
-      ],
+      }],
     });
 
     if (!outfit) {
       return null;
     }
 
-    // Return the plain object with ClothingItems transformed
     const plainOutfit = outfit.get({ plain: true });
-
-    // Transform ClothingItems data
+    
     return {
       ...plainOutfit,
-      ClothingItems: plainOutfit.ClothingItems?.map((item) => ({
-        ...item,
-        OutfitItem: {
-          ...item.OutfitItems,
-          position: item.OutfitItems?.position
-            ? typeof item.OutfitItems.position === "string"
-              ? JSON.parse(item.OutfitItems.position)
-              : item.OutfitItems.position
-            : { x: 0, y: 0 },
-        },
-      })),
+      ClothingItems: plainOutfit.ClothingItems?.map((item) => {
+        try {
+          // Access OutfitItems data correctly
+          const outfitItemData = item.OutfitItems || {};
+          const positionData = outfitItemData.position;
+          
+          return {
+            ...item,
+            OutfitItems: {
+              ...outfitItemData,
+              position: typeof positionData === 'string' 
+                ? JSON.parse(positionData) 
+                : positionData || { x: 0, y: 0 }
+            }
+          };
+        } catch (err) {
+          console.error('Error transforming item:', err);
+          return {
+            ...item,
+            OutfitItems: {
+              ...item.OutfitItems,
+              position: { x: 0, y: 0 }
+            }
+          };
+        }
+      }) || []
     };
   } catch (err) {
     console.error("Error getting outfit by ID:", err);
     throw new Error("Failed to get outfit");
   }
 };
-
 // Get all outfits by user ID
 const getOutfitsByUserId = async (user_id) => {
   try {
