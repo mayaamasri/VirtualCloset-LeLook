@@ -17,6 +17,132 @@ const {
   updateOutfitValidator,
 } = require("../Validators/OutfitsValidator");
 
+/**
+@swagger
+* /outfits:
+*   post:
+*     summary: Create a new outfit
+*     tags: [Outfits]
+*     security:
+*       - bearerAuth: []
+*     requestBody:
+*       required: true
+*       content:
+*         multipart/form-data:
+*           schema:
+*             type: object
+*             required:
+*               - user_id
+*               - name
+*               - occasion
+*               - season
+*             properties:
+*               user_id:
+*                 type: integer
+*               name:
+*                 type: string
+*               occasion:
+*                 type: string
+*               season:
+*                 type: string
+*               image:
+*                 type: string
+*                 format: binary
+*               items:
+*                 type: string
+*                 description: JSON string of outfit items
+*     responses:
+*       201:
+*         description: Outfit created successfully
+*       400:
+*         description: Invalid input
+*
+* /outfits/{id}:
+*   get:
+*     summary: Get outfit by ID
+*     tags: [Outfits]
+*     security:
+*       - bearerAuth: []
+*     parameters:
+*       - in: path
+*         name: id
+*         required: true
+*         schema:
+*           type: integer
+*     responses:
+*       200:
+*         description: Outfit details retrieved successfully
+*       404:
+*         description: Outfit not found
+*
+*   put:
+*     summary: Update an outfit
+*     tags: [Outfits]
+*     security:
+*       - bearerAuth: []
+*     parameters:
+*       - in: path
+*         name: id
+*         required: true
+*         schema:
+*           type: integer
+*     requestBody:
+*       required: true
+*       content:
+*         multipart/form-data:
+*           schema:
+*             type: object
+*             properties:
+*               name:
+*                 type: string
+*               occasion:
+*                 type: string
+*               season:
+*                 type: string
+*               image:
+*                 type: string
+*                 format: binary
+*               items:
+*                 type: string
+*     responses:
+*       200:
+*         description: Outfit updated successfully
+*       404:
+*         description: Outfit not found
+*
+*   delete:
+*     summary: Delete an outfit
+*     tags: [Outfits]
+*     security:
+*       - bearerAuth: []
+*     parameters:
+*       - in: path
+*         name: id
+*         required: true
+*         schema:
+*           type: integer
+*     responses:
+*       200:
+*         description: Outfit deleted successfully
+*       404:
+*         description: Outfit not found
+*
+* /outfits/user/{user_id}:
+*   get:
+*     summary: Get all outfits for a user
+*     tags: [Outfits]
+*     security:
+*       - bearerAuth: []
+*     parameters:
+*       - in: path
+*         name: user_id
+*         required: true
+*         schema:
+*           type: integer
+*     responses:
+*       200:
+*         description: List of user's outfits
+*/
 router.post(
   "/",
   upload.single("image"),

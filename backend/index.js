@@ -7,6 +7,8 @@ const path = require("path");
 const fs = require("fs");
 const cookieParser = require("cookie-parser");
 const handleUploadError = require("./Middleware/errorMiddleware");
+const redisClient = require("./Config/RedisConfig");
+const swaggerDocs = require("./Config/swagger");
 
 // Importing the routes
 const countryRoutes = require("./Routes/CountryRoutes");
@@ -21,6 +23,10 @@ const aiRoutes = require("./Routes/aiRoutes");
 dotenv.config();
 
 const app = express();
+
+(async () => {
+  await redisClient.connect();
+})();
 
 // Create the uploads directory if it doesn't exist
 const uploadsDir = path.join(__dirname, "public", "uploads");
@@ -49,6 +55,7 @@ app.use("/outfits", outfitsRoutes);
 app.use("/outfitItems", outfitsItemsRoutes);
 app.use("/categories", categoriesRoutes);
 app.use("/ai", aiRoutes);
+app.use("/api-docs", swaggerDocs.serve, swaggerDocs.setup);
 
 // Default route
 app.get("/", (req, res) => {

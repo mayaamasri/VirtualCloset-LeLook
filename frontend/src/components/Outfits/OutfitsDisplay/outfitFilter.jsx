@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Button } from "@mui/material";
-import { Plus } from "lucide-react";
+import { Plus, Wand } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import FilterInputs from "./filterInputs";
 
@@ -14,7 +14,7 @@ const OutfitsFilter = ({ filters, onFilterChange }) => {
         sx={{
           display: "flex",
           alignItems: "center",
-          gap: 3,
+          gap: 2,
           mb: 3,
         }}
       >
@@ -35,6 +35,22 @@ const OutfitsFilter = ({ filters, onFilterChange }) => {
           }}
         >
           Add Outfit
+        </Button>
+        <Button
+          variant="contained"
+          startIcon={<Wand size={20} />}
+          onClick={() => navigate("/ai-generate")}
+          sx={{
+            bgcolor: "primary.main",
+            py: 2,
+            width: "17vh",
+            color: "white",
+            "&:hover": {
+              bgcolor: "primary.dark",
+            },
+          }}
+        >
+          Ai Assistant
         </Button>
       </Box>
     </Box>

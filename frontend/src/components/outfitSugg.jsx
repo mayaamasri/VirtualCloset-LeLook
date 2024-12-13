@@ -75,7 +75,7 @@ const AiSuggestions = ({ userItems, userPreferences }) => {
 
   return (
     <Box sx={{ maxWidth: "4xl", mx: "100px" }}>
-      <Paper sx={{ p: 4, borderRadius: 2, bgcolor: "white" }}>
+      <Paper sx={{ p: 4, borderRadius: 2, bgcolor: "#D0C7B8" }}>
         <WeatherOccasionForm
           weather={weather}
           occasion={occasion}
